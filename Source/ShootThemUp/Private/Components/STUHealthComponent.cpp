@@ -59,23 +59,27 @@ void USTUHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
 
 void USTUHealthComponent::AutoHeal()
 {
-	Heal(HealModifier);
+	SetHealth(Health + HealModifier);
 
-	if(FMath::IsNearlyEqual(Health, MaxHealth))
+	if(IsHealthFull())
 	{
 		GetOwner()->GetWorldTimerManager().ClearTimer(AutoHealTimer);
 	}
 }
 
-void USTUHealthComponent::Heal(float HealAmount)
+bool USTUHealthComponent::TryToAddHealth(const float HealAmount)
 {
+	if(IsDead() || IsHealthFull()) return false;
 	SetHealth(Health + HealAmount);
+	return true;
 }
 
-void USTUHealthComponent::SetHealth(float NewHealth)
+void USTUHealthComponent::SetHealth(const float NewHealth)
 {
 	Health = FMath::Clamp<float>(NewHealth, 0.0f, MaxHealth);
 	OnHealthChanged.Broadcast(Health);
 }
 
 float USTUHealthComponent::GetHealthPercent() const { return Health / MaxHealth; }
+
+bool USTUHealthComponent::IsHealthFull() const { return FMath::IsNearlyEqual(Health, MaxHealth); }

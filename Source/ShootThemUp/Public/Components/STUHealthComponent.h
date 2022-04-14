@@ -16,6 +16,8 @@ public:
 	USTUHealthComponent();
 
 	float GetHealth() const;
+	bool TryToAddHealth(float HealAmount);
+	bool IsHealthFull() const;
 
 	UFUNCTION(BlueprintCallable, Category="Health")
 	bool IsDead() const;
@@ -56,7 +58,6 @@ private:
 	void OnTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 	                     class AController* InstigatedBy, AActor* DamageCauser);
 
-	void Heal(float HealModifier);
 	void AutoHeal();
 	void SetHealth(float NewHealth);
 };

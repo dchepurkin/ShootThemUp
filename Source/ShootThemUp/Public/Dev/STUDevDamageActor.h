@@ -9,33 +9,34 @@
 UCLASS()
 class SHOOTTHEMUP_API ASTUDevDamageActor : public AActor
 {
-    GENERATED_BODY()
+	GENERATED_BODY()
 
-  public:
-    ASTUDevDamageActor();
+public:
+	ASTUDevDamageActor();
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-    USceneComponent *SceneComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	USceneComponent* SceneComponent;
 
-    UPROPERTY(EditInstanceOnly)
-    float Radius = 300.0f;
+	UPROPERTY(EditInstanceOnly)
+	float Radius = 300.0f;
 
-    UPROPERTY(EditInstanceOnly)
-    bool DoFullDamage = true;
+	UPROPERTY(EditInstanceOnly)
+	bool DoFullDamage = true;
 
-    UPROPERTY(EditInstanceOnly, meta = (ClampMin = "0.0", ClampMax = "10000.0"))
-    float BaseDamage = 0.1f;
+	UPROPERTY(EditInstanceOnly, meta = (ClampMin = "0.0", ClampMax = "10000.0"))
+	float BaseDamage = 0.1f;
 
-    UPROPERTY(EditInstanceOnly)
-    FColor SphereColor = FColor::Red;
+	UPROPERTY(EditInstanceOnly)
+	FColor SphereColor = FColor::Red;
 
-    UPROPERTY(EditInstanceOnly)
-    TSubclassOf<UDamageType> DamageType;
+	UPROPERTY(EditInstanceOnly)
+	TSubclassOf<UDamageType> DamageType;
 
-        protected : virtual void BeginPlay() override;
+protected :
+	virtual void BeginPlay() override;
 
-  public:
-    virtual void Tick(float DeltaTime) override;
+public:
+	virtual void Tick(float DeltaTime) override;
 
-  private:
+private:
 };

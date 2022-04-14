@@ -28,6 +28,8 @@ public:
 	bool GetWeaponUIData(FWeaponUIData& UIData) const;
 	bool GetWeaponAmmoData(FAmmoData& AmmoData) const;
 
+	bool TryToAddAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType, int32 ClipsAmount);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -72,6 +74,6 @@ private:
 	bool CanEquip() const;
 	bool CanReload() const;
 
-	void OnClipEmpty();
+	void OnClipEmpty(ASTUBaseWeapon* AmmoEmptyWeapon);
 	void ChangeClip();
 };

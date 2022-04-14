@@ -67,7 +67,7 @@ bool ASTURifleWeapon::GetTraceData(FVector &TraceStart, FVector &TraceEnd) const
 
 void ASTURifleWeapon::MakeDamage(FHitResult &HitResult) const
 {
-    const auto Target = Cast<ACharacter>(HitResult.Actor);
+    const auto Target = Cast<ACharacter>(HitResult.GetActor());
     if (!Target)
         return;
     Target->TakeDamage(WeaponDamage, FDamageEvent(), GetPlayerController(), GetOwner());
