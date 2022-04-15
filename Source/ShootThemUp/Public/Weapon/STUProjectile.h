@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class UProjectileMovementComponent;
+class USTUWeaponFXComponent;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUProjectile : public AActor
@@ -20,6 +21,9 @@ class SHOOTTHEMUP_API ASTUProjectile : public AActor
 
   protected:
     virtual void BeginPlay() override;
+
+    UPROPERTY(VisibleAnywhere, Category="VFX")
+    USTUWeaponFXComponent* WeaponFXComponent;
 
     UPROPERTY(VisibleAnywhere, Category = "Weaopn")
     USphereComponent *SphereComponent;
