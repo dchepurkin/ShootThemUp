@@ -40,11 +40,11 @@ protected:
 	bool AutoHealEnabled = true;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Auto Heal",
-		meta = (ClampMin = "0.1", ClampMax = "10.0", EditCondition = "AutoHealEnabled"))
+		meta = (ClampMin = "0.001", ClampMax = "10.0", EditCondition = "AutoHealEnabled"))
 	float HealUpdateTime = 0.5f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Auto Heal",
-		meta = (ClampMin = "0.1", ClampMax = "10.0", EditCondition = "AutoHealEnabled"))
+		meta = (ClampMin = "0.001", ClampMax = "10.0", EditCondition = "AutoHealEnabled"))
 	float HealDelay = 2.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Auto Heal",
