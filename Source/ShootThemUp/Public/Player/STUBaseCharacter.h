@@ -76,7 +76,7 @@ private:
 	void OnStartFire();
 
 	void OnDeath();
-	void OnHealthChanged(const float Health) const;
+	void OnHealthChanged(float Health, float HealthDelta) const;
 
 	UFUNCTION()
 	void OnGroundLanded(const FHitResult& Hit);

@@ -7,39 +7,52 @@
 #include "STURifleWeapon.generated.h"
 
 class USTUWeaponFXComponent;
+class UNiagaraSystem;
+class UNiagaraComponent;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTURifleWeapon : public ASTUBaseWeapon
 {
-    GENERATED_BODY()
+	GENERATED_BODY()
 
-  public:
-  
-    ASTURifleWeapon();
-  
-    virtual void StartFire() override;
-    virtual void StopFire() override;
+public:
+	ASTURifleWeapon();
 
-  protected:
-    UPROPERTY(VisibleAnywhere, Category="VFX")
-    USTUWeaponFXComponent* WeaponFXComponent;
-  
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float BulletSpread = 1.5f;
+	virtual void StartFire() override;
+	virtual void StopFire() override;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage", meta = (ClampMin = "0.0"))
-    float WeaponDamage = 10.0f; 
+protected:
+	UPROPERTY(VisibleAnywhere, Category="VFX")
+	USTUWeaponFXComponent* WeaponFXComponent;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage", meta = (ClampMin = "0.1"))
-    float FireRate = 0.1f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float BulletSpread = 1.5f;
 
-    virtual void MakeShot() override;
-    virtual bool GetTraceData(FVector &TraceStart, FVector &TraceEnd) const override;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage", meta = (ClampMin = "0.0"))
+	float WeaponDamage = 10.0f;
 
-    void MakeDamage(FHitResult &HitResult) const;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage", meta = (ClampMin = "0.1"))
+	float FireRate = 0.1f;
 
-    virtual void BeginPlay() override;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+	UNiagaraSystem* TraceFX;
 
-  private:
-    FTimerHandle FireTimer;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "VFX")
+	FString TraceTargetName = "TraceTarget";
+
+	virtual void MakeShot() override;
+	virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const override;
+
+	virtual void BeginPlay() override;
+
+private:
+	FTimerHandle FireTimer;
+
+	UPROPERTY()
+	UNiagaraComponent* MuzzleFXComponent;
+
+	void MakeDamage(FHitResult& HitResult) const;
+	void InitMuzzleFX();
+	void SetMuzzleFXVisibility(bool Visible);
+	void SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd);
 };
