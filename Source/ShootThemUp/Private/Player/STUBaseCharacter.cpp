@@ -14,7 +14,7 @@
 DEFINE_LOG_CATEGORY_STATIC(LogCharacter, All, All)
 
 ASTUBaseCharacter::ASTUBaseCharacter(const FObjectInitializer& ObjInit) : Super(
-	ObjInit.SetDefaultSubobjectClass<USTUCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
+	ObjInit.SetDefaultSubobjectClass<USTUCharacterMovementComponent>(CharacterMovementComponentName))
 {
 	PrimaryActorTick.bCanEverTick = true;
 

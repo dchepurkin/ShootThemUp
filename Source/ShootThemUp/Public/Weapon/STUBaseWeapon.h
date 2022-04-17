@@ -28,6 +28,7 @@ public:
 
 	void ChangeClip();
 	bool CanReload() const;
+	bool IsAmmoEmpty() const;
 
 	bool IsFiring() const;
 
@@ -63,8 +64,7 @@ protected:
 	FVector GetMuzzleWorldLocation() const;
 	void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
 
-	void DecreaseAmmo();
-	bool IsAmmoEmpty() const;
+	void DecreaseAmmo();	
 	bool IsClipEmpty() const;
 	bool IsAmmoFull() const;
 
