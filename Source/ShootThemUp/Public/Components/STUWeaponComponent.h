@@ -31,6 +31,8 @@ public:
 
 	bool TryToAddAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType, int32 ClipsAmount);
 
+	bool NeedAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType);
+
 protected:
 	int32 CurrentWeaponIndex = 0;
 

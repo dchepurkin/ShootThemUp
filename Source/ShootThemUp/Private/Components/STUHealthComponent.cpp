@@ -82,7 +82,7 @@ void USTUHealthComponent::SetHealth(const float NewHealth)
 {
 	const auto NextHealth = FMath::Clamp<float>(NewHealth, 0.0f, MaxHealth);
 	const auto HealthDelta = NextHealth - Health;
-	Health = NextHealth;
+	Health = NextHealth;	
 	OnHealthChanged.Broadcast(Health, HealthDelta);
 }
 
