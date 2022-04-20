@@ -6,6 +6,7 @@
 #include "Gameframework/Controller.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
+#include "STUGameModeBase.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogHealthComponent, All, All)
 
@@ -50,6 +51,7 @@ void USTUHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
 
 	if(IsDead())
 	{
+		Killed(InstigatedBy);
 		OnDeath.Broadcast();
 	}
 	else if(AutoHealEnabled)
@@ -82,7 +84,7 @@ void USTUHealthComponent::SetHealth(const float NewHealth)
 {
 	const auto NextHealth = FMath::Clamp<float>(NewHealth, 0.0f, MaxHealth);
 	const auto HealthDelta = NextHealth - Health;
-	Health = NextHealth;	
+	Health = NextHealth;
 	OnHealthChanged.Broadcast(Health, HealthDelta);
 }
 
@@ -101,4 +103,17 @@ void USTUHealthComponent::PlayCameraShake() const
 	if(!Controller || !Controller->PlayerCameraManager) return;
 
 	Controller->PlayerCameraManager->StartCameraShake(CameraShake);
+}
+
+void USTUHealthComponent::Killed(AController* KillerController)
+{
+	if(!GetWorld()) return;
+
+	const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
+	if(!GameMode) return;
+
+	const auto Player = Cast<APawn>(GetOwner());
+	const auto VictimController = Player ? Player->Controller : nullptr;
+
+	GameMode->Killed(KillerController, VictimController);
 }

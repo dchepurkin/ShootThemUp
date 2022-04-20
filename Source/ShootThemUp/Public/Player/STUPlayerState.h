@@ -14,11 +14,21 @@ class SHOOTTHEMUP_API ASTUPlayerState : public APlayerState
 public:
 	void SetTeamID(const int32 ID) { TeamID = ID; }
 	int32 GetTeamID() const { return TeamID; }
-	
+
 	void SetTeamColor(const FLinearColor& Color) { TeamColor = Color; }
 	FLinearColor GetTeamColor() const { return TeamColor; }
+
+	int32 GetKillsNum() const { return KillsNum; }
+	int32 GetDeathsNum() const { return DeathsNum; }
+	void AddKill() { ++KillsNum; }
+	void AddDeath() { ++DeathsNum; }
+
+	void LogInfo() const;
 
 private:
 	int32 TeamID;
 	FLinearColor TeamColor;
+
+	int32 KillsNum = 0;
+	int32 DeathsNum = 0;
 };
