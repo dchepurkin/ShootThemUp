@@ -8,6 +8,7 @@
 #include "Player/STUPlayerState.h"
 #include "STUUtils.h"
 #include "STURespawnComponent.h"
+#include "EngineUtils.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSTUGameModBase, All, All)
 
@@ -24,10 +25,14 @@ ASTUGameModeBase::ASTUGameModeBase()
 void ASTUGameModeBase::StartPlay()
 {
 	Super::StartPlay();
+
 	SpawnBots();
 	CreateTeamsInfo();
+
 	CurrentRound = 1;
 	StartRound();
+
+	SetMatchState(ESTUMatchState::InProgress);
 }
 
 void ASTUGameModeBase::SpawnBots()
@@ -74,8 +79,7 @@ void ASTUGameModeBase::GameTimerUpdate()
 		}
 		else
 		{
-			UE_LOG(LogSTUGameModBase, Display, TEXT("-------- GAME OVER --------"));
-			LogPlayerInfo();
+			GameOver();
 		}
 	}
 }
@@ -197,4 +201,46 @@ void ASTUGameModeBase::StartRespawn(AController* Controller)
 	if(!RespawnComponent) return;
 
 	RespawnComponent->Respawn(GameData.RespawnTime);
+}
+
+void ASTUGameModeBase::GameOver()
+{
+	UE_LOG(LogSTUGameModBase, Display, TEXT("-------- GAME OVER --------"));
+	LogPlayerInfo();
+
+	for(auto Pawn : TActorRange<APawn>(GetWorld()))
+	{
+		if(Pawn)
+		{
+			Pawn->TurnOff();
+			Pawn->DisableInput(nullptr);
+		}
+	}
+	SetMatchState(ESTUMatchState::GameOver);
+}
+
+void ASTUGameModeBase::SetMatchState(const ESTUMatchState NewMatchState)
+{
+	if(MatchState == NewMatchState) return;
+
+	MatchState = NewMatchState;
+	OnMatchStateChanged.Broadcast(MatchState);
+}
+
+bool ASTUGameModeBase::SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate)
+{
+	const auto PauseSet = Super::SetPause(PC, CanUnpauseDelegate);
+
+	if(PauseSet) SetMatchState(ESTUMatchState::Pause);
+
+	return PauseSet;
+}
+
+bool ASTUGameModeBase::ClearPause()
+{
+	const auto PauseCleared = Super::ClearPause();
+
+	if(PauseCleared) SetMatchState(ESTUMatchState::InProgress);
+
+	return PauseCleared;
 }

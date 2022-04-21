@@ -8,13 +8,22 @@
 
 bool USTUPlayerHUDWidget::Initialize()
 {
-	const auto HealthComponent = STUUtils::GetSTUPlayerComponent<USTUHealthComponent>(GetOwningPlayerPawn());
+	if(GetOwningPlayer())
+	{
+		GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &USTUPlayerHUDWidget::OnNewPawn);
+		OnNewPawn(GetOwningPlayerPawn()); //функция Initialize вызывается после OnPossess поэтому нужно в первый раз явно вызвать функцию OnNewPawn
+	}
+
+	return Super::Initialize();
+}
+
+void USTUPlayerHUDWidget::OnNewPawn(APawn* Pawn)
+{
+	const auto HealthComponent = STUUtils::GetSTUPlayerComponent<USTUHealthComponent>(Pawn);
 	if(HealthComponent)
 	{
 		HealthComponent->OnHealthChanged.AddUObject(this, &USTUPlayerHUDWidget::OnHealthChanged);
 	}
-
-	return Super::Initialize();
 }
 
 void USTUPlayerHUDWidget::OnHealthChanged(float Health, float HealthDelta)
