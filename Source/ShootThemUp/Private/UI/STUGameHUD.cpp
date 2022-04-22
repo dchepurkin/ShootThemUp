@@ -17,6 +17,9 @@ void ASTUGameHUD::BeginPlay()
 	GameWidgets.Add(ESTUMatchState::Pause,
 	                CreateWidget<UUserWidget>(GetOwningPlayerController(), PauseWidgetClass));
 
+	GameWidgets.Add(ESTUMatchState::GameOver,
+	                CreateWidget<UUserWidget>(GetOwningPlayerController(), GameOverWidgetClass));
+
 	for(const auto GameWidgetPair : GameWidgets)
 	{
 		const auto GameWidget = GameWidgetPair.Value;
