@@ -4,6 +4,8 @@
 #include "Components/Button.h"
 #include "GameFramework/GameModeBase.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogSTUPauseWidget, All, All)
+
 void USTUPauseWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();

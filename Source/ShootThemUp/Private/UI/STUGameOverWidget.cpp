@@ -9,6 +9,8 @@
 #include "Components/VerticalBox.h"
 #include "Kismet/GameplayStatics.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogSTUGameOverWidget, All, All)
+
 void USTUGameOverWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();

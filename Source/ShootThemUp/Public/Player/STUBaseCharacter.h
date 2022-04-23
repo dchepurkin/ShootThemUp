@@ -43,6 +43,8 @@ protected:
 
 	virtual void BeginPlay() override;
 	virtual void OnDeath();
+	virtual void OnHealthChanged(float Health, float HealthDelta) const;
+	
 
 public:
 	virtual void Tick(float DeltaTime) override;	
@@ -53,13 +55,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	float GetMovementDirection() const;
 
-	void SetPlayerColor(const FLinearColor& Color);
+	void SetPlayerColor(const FLinearColor& Color);	
 
 private:
-	void OnStartFire();
-
-	void OnHealthChanged(float Health, float HealthDelta) const;
+	void OnStartFire();	
 
 	UFUNCTION()
-	void OnGroundLanded(const FHitResult& Hit);
+	void OnGroundLanded(const FHitResult& Hit);	
 };
