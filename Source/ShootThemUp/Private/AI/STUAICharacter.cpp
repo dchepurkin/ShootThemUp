@@ -22,7 +22,7 @@ ASTUAICharacter::ASTUAICharacter(const FObjectInitializer& ObjInit)
 		GetCharacterMovement()->RotationRate = FRotator(0.0f, 200.0f, 0.0f);
 	}
 
-	HealthBarWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("Health");
+	HealthBarWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
 	HealthBarWidgetComponent->AttachToComponent(GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
 	HealthBarWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
 	HealthBarWidgetComponent->SetDrawAtDesiredSize(true);
@@ -59,7 +59,7 @@ void ASTUAICharacter::OnHealthChanged(float Health, float HealthDelta) const
 
 	const auto HealthBarWidget = Cast<USTUHealthBarWidget>(HealthBarWidgetComponent->GetUserWidgetObject());
 	if(!HealthBarWidget || !HealthComponent) return;
-
+	
 	HealthBarWidget->SetHealthPercent(HealthComponent->GetHealthPercent());
 }
 

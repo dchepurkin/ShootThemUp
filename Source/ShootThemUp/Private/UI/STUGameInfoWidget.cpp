@@ -22,14 +22,6 @@ void USTUGameInfoWidget::GetRoundInfo(int32& TotalRoundsNum, int32& CurrentRound
 	GameMod->GetRoundInfo(TotalRoundsNum, CurrentRoundNum);
 }
 
-void USTUGameInfoWidget::GetKillsInfo(int32& Kills) const
-{
-	const auto PlayerState = GetPlayerState();
-	if(!PlayerState) return;
-
-	Kills = PlayerState->GetKillsNum();
-}
-
 void USTUGameInfoWidget::GetTimeInfo(int32& RoundCountDown) const
 {
 	const auto GameMod = GetGameMode();

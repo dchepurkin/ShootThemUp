@@ -18,10 +18,7 @@ public:
 	void GetRoundInfo(int32& TotalRoundsNum, int32& CurrentRoundNum) const;
 
 	UFUNCTION(BlueprintCallable, Category="UI")
-	void GetTimeInfo(int32& RoundCountDown) const;
-
-	UFUNCTION(BlueprintCallable, Category="UI")
-	void GetKillsInfo(int32& Kills) const;
+	void GetTimeInfo(int32& RoundCountDown) const;	
 
 private:
 	ASTUGameModeBase* GetGameMode() const;
