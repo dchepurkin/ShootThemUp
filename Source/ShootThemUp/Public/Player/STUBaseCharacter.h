@@ -7,9 +7,9 @@
 #include "GameFramework/Character.h"
 #include "STUBaseCharacter.generated.h"
 
-
 class USTUHealthComponent;
 class USTUWeaponComponent;
+class USoundCue;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
@@ -24,7 +24,7 @@ protected:
 	USTUWeaponComponent* WeaponComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	USTUHealthComponent* HealthComponent;	
+	USTUHealthComponent* HealthComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* DeathAnimMontage;
@@ -40,14 +40,16 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Material")
 	FName MaterialColorName = "Paint Color";
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sounds")
+	USoundCue* DeathSound;
 
 	virtual void BeginPlay() override;
 	virtual void OnDeath();
 	virtual void OnHealthChanged(float Health, float HealthDelta) const;
-	
 
 public:
-	virtual void Tick(float DeltaTime) override;	
+	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	virtual bool IsRunning() const;
@@ -55,11 +57,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	float GetMovementDirection() const;
 
-	void SetPlayerColor(const FLinearColor& Color);	
+	void SetPlayerColor(const FLinearColor& Color);
 
 private:
-	void OnStartFire();	
+	void OnStartFire();
 
 	UFUNCTION()
-	void OnGroundLanded(const FHitResult& Hit);	
+	void OnGroundLanded(const FHitResult& Hit);
 };

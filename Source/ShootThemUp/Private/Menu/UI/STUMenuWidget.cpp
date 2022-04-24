@@ -6,6 +6,7 @@
 #include "STULevelItemWidget.h"
 #include "Components/HorizontalBox.h"
 #include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSTUMenuWidget, All, All)
 
@@ -29,6 +30,9 @@ void USTUMenuWidget::NativeOnInitialized()
 void USTUMenuWidget::OnStartGame()
 {
 	PlayAnimation(HideAnimation);
+	if(!GetWorld()) return;
+
+	UGameplayStatics::PlaySound2D(GetWorld(), StartGameSound);
 }
 
 void USTUMenuWidget::OnQuitGame()

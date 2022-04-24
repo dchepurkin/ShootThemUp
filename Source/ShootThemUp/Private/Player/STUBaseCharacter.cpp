@@ -6,6 +6,8 @@
 #include "Components/STUWeaponComponent.h"
 #include "Gameframework/Controller.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogCharacter, All, All)
 
@@ -58,17 +60,18 @@ void ASTUBaseCharacter::OnDeath()
 
 	GetCharacterMovement()->DisableMovement();
 	SetLifeSpan(LifeSpanOnDeath);
-	
+
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	GetMesh()->SetSimulatePhysics(true);
+
+	if(!GetWorld()) return;
+
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), DeathSound, GetActorLocation());
 }
 
-void ASTUBaseCharacter::OnHealthChanged(float Health, float HealthDelta) const
-{
-	
-}
+void ASTUBaseCharacter::OnHealthChanged(float Health, float HealthDelta) const { }
 
 void ASTUBaseCharacter::OnGroundLanded(const FHitResult& Hit)
 {
