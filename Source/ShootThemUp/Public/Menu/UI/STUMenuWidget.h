@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "STUBaseWidget.h"
 #include "STUCoreTypes.h"
 #include "STUMenuWidget.generated.h"
 
@@ -13,7 +13,7 @@ class USTUGameInstance;
 class USTULevelItemWidget;
 
 UCLASS()
-class SHOOTTHEMUP_API USTUMenuWidget : public UUserWidget
+class SHOOTTHEMUP_API USTUMenuWidget : public USTUBaseWidget
 {
 	GENERATED_BODY()
 
@@ -27,10 +27,14 @@ protected:
 	UPROPERTY(meta=(BindWidget))
 	UHorizontalBox* LevelItemsBox;
 
+	UPROPERTY(Transient, meta=(BindWidgetAnim))
+	UWidgetAnimation* HideAnimation;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=UI)
 	TSubclassOf<UUserWidget> LevelItemWidgetClass;
 
 	virtual void NativeOnInitialized() override;
+	virtual void OnAnimationFinished_Implementation(const UWidgetAnimation* Animation) override;
 
 private:
 	UPROPERTY()

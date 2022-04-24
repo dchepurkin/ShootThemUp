@@ -1,7 +1,7 @@
 // Shoot Them Up Game. All Right Reserved
 
 #include "UI/STUGameHUD.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/STUBaseWidget.h"
 #include "Engine/Canvas.h"
 #include "STUGameModeBase.h"
 
@@ -12,13 +12,13 @@ void ASTUGameHUD::BeginPlay()
 	Super::BeginPlay();
 
 	GameWidgets.Add(ESTUMatchState::InProgress,
-	                CreateWidget<UUserWidget>(GetOwningPlayerController(), PlayerHUDWidgetClass));
+	                CreateWidget<USTUBaseWidget>(GetOwningPlayerController(), PlayerHUDWidgetClass));
 
 	GameWidgets.Add(ESTUMatchState::Pause,
-	                CreateWidget<UUserWidget>(GetOwningPlayerController(), PauseWidgetClass));
+	                CreateWidget<USTUBaseWidget>(GetOwningPlayerController(), PauseWidgetClass));
 
 	GameWidgets.Add(ESTUMatchState::GameOver,
-	                CreateWidget<UUserWidget>(GetOwningPlayerController(), GameOverWidgetClass));
+	                CreateWidget<USTUBaseWidget>(GetOwningPlayerController(), GameOverWidgetClass));
 
 	for(const auto GameWidgetPair : GameWidgets)
 	{
@@ -42,7 +42,6 @@ void ASTUGameHUD::BeginPlay()
 void ASTUGameHUD::DrawHUD()
 {
 	Super::DrawHUD();
-	//DrawCrossHair();
 }
 
 void ASTUGameHUD::DrawCrossHair()
@@ -72,6 +71,7 @@ void ASTUGameHUD::OnMatchStateChanged(ESTUMatchState State)
 	if(CurrentWidget)
 	{
 		CurrentWidget->SetVisibility(ESlateVisibility::Visible);
+		CurrentWidget->Show();
 	}
 	UE_LOG(LogSTUGameHUD, Display, TEXT("State is changed: %s"), *UEnum::GetDisplayValueAsText(State).ToString());
 }
